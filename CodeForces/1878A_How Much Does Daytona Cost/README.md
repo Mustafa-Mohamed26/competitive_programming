@@ -1,164 +1,66 @@
-تمام ✅
-ده **README.md كامل ومتكامل** (Markdown جاهز 100%) تقدر تحطه مباشرة في الريبو أو تضيفه للمسألة على GitHub:
-
-```md
-# 🏁 How Much Does Daytona Cost?
+# 🏁 How Much Does Daytona Cost? - Solution
 
 ## 📖 Problem Overview
-You are given an integer array `a` of size `n` and an integer `k`.
+The problem asks whether there exists a **non-empty subsegment** in a given array `a` where a specific integer `k` is the **most common element**. 
 
-An integer is considered **the most common element** in a subsegment if its number of occurrences in that subsegment is **strictly greater** than the number of occurrences of any other integer in the same subsegment.
-
-A **subsegment** is a consecutive part of the array.
-
-Your task is to determine whether there exists **at least one non-empty subsegment** of the array where `k` is the most common element.
-
----
-
-## 🧾 Input Format
-- The first line contains an integer `t` — the number of test cases.
-- For each test case:
-  - One line contains two integers `n` and `k`
-  - One line contains `n` integers representing the array `a`
-
----
-
-## 📤 Output Format
-For each test case, print:
-- `"YES"` if there exists a subsegment where `k` is the most common element
-- `"NO"` otherwise
-
-> Output is case-insensitive.
+An element is "most common" if its frequency is **strictly greater** than the frequency of any other element in that subsegment.
 
 ---
 
 ## 💡 Key Insight
-A subsegment can consist of **a single element**.
+The most efficient way to solve this is to look for the smallest possible subsegment: **a subsegment of length 1.**
 
-If the array contains at least one occurrence of `k`, we can choose the subsegment:
-```
+If the integer `k` exists anywhere in the array, we can simply pick the subsegment `[k]`. 
+* In this subsegment, `k` appears **1 time**.
+* No other element appears.
+* Therefore, `k` is the most common element.
 
-[k]
-
-````
-
-In this subsegment:
-- `k` appears once
-- No other element appears more than once
-
-✅ Therefore, `k` is trivially the most common element.
+> **Conclusion:** The answer is `YES` if `k` is present in the array, and `NO` otherwise.
 
 ---
 
-## ✅ Decision Rule
-- If `k` appears **at least once** in the array → `YES`
-- If `k` does **not appear** in the array → `NO`
-
-No additional checks are required.
-
----
-
-## 🧠 Algorithm
-For each test case:
-1. Read `n` and `k`
-2. Iterate through the array
-3. If any element equals `k`, print `"YES"`
-4. Otherwise, print `"NO"`
+## ⚙️ Algorithm
+1. Read the number of test cases `t`.
+2. For each test case:
+    - Read `n` (size of array) and `k` (target element).
+    - Read the array elements.
+    - Check if `k` exists in the array.
+    - Print `YES` if found, else print `NO`.
 
 ---
 
 ## ⏱ Complexity Analysis
-- **Time Complexity:** `O(n)` per test case
-- **Space Complexity:** `O(1)`
-
-Efficient enough for all given constraints.
+- **Time Complexity:** $O(n)$ per test case, as we only need to scan the array once.
+- **Space Complexity:** $O(1)$ if we check elements on the fly, or $O(n)$ to store the array.
 
 ---
 
-## 💻 C++ Implementation
+## 💻 Implementation
 
+### C++ Solution
 ```cpp
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
-
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    int t;
+int main()
+{
+    int t, n, k;
+    
     cin >> t;
+    
     while (t--) {
-        int n, k;
-        cin >> n >> k;
-
         bool found = false;
-        for (int i = 0; i < n; i++) {
-            int x;
-            cin >> x;
-            if (x == k) {
+        cin >> n >> k;
+		int* arr = new int[n];
+        for (int i = 0; i < n; i++)
+        {
+            cin >> arr[i];
+            if (arr[i] == k) {
                 found = true;
+                
             }
+            
         }
-
-        cout << (found ? "YES\n" : "NO\n");
+        if (found) cout << "YES\n";
+        else cout << "NO\n";
     }
-    return 0;
 }
-````
-
----
-
-## 🧪 Sample Input
-
-```
-7
-5 4
-1 4 3 4 1
-4 1
-2 3 4 4
-5 6
-43 5 60 4 2
-2 5
-1 5
-4 1
-5 3 3 1
-1 3
-3
-5 3
-3 4 1 5 5
-```
-
----
-
-## ✅ Sample Output
-
-```
-YES
-NO
-NO
-YES
-YES
-YES
-YES
-```
-
----
-
-## 📝 Notes
-
-* Subsegments must be **non-empty**
-* A single-element subsegment is valid
-* Simple linear scan is sufficient
-* Works within all constraints
-
----
-
-## 🚀 Conclusion
-
-This problem reduces to a simple check:
-
-> **Does `k` appear in the array or not?**
-
-If yes — the answer is always `"YES"`.
-
-Happy coding 🎯
